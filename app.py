@@ -30,12 +30,12 @@ model = give_model()
 # We have already developed a model using the dataset and saved the best val_accuracy model and loaded here.
 
 model.load_weights(
-    'D:\Data Analytics for Business\Keras learning\dataset\model_to_load\cat-dog.hdf5')
+    'D:\Data Analytics for Business\Keras learning\cat_dog_pred\model_to_load\cat-dog.hdf5')
 
 # give_reslut will do the preprocessing that need to be done on any image the provides us with and then returns the predictions
 
 def give_result(filename):
-    path = os.path.join('D:\Data Analytics for Business\Keras learning\dataset\static', filename)
+    path = os.path.join('D:\Data Analytics for Business\Keras learning\cat_dog_pred\static', filename)
     im = cv2.imread(path, cv2.IMREAD_COLOR)
     im = cv2.resize(im, (224, 224))
     im = im.reshape(-1, 224, 224, 3)
@@ -52,8 +52,7 @@ def show_image():
     if request.method == 'POST':
         im = request.files['file']
         filename = im.filename
-        im.save(os.path.join(
-            'D:\Data Analytics for Business\Keras learning\dataset\static', filename))
+        im.save(os.path.join('D:\Data Analytics for Business\Keras learning\cat_dog_pred\static', filename))
         res = give_result(filename)     # using give_result converting the input image to our desired size and predicting on the model
         print(res)
     return render_template('index.html', im=filename, res=res)
